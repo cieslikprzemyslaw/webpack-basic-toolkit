@@ -8,12 +8,12 @@ const settings = {
         basic: './src/index.js',
     },
     output: {
-        filename: "[name].[contenthash:8].js",
+        filename: "js/[name].js",
         path: path.resolve(__dirname,'/build'),
     },
     devServer: {
         open: 'Firefox',
-        contentBase: path.resolve(__dirname,'/public'),
+        contentBase: path.resolve(__dirname,'../public'),
         host: 'localhost',
         port: 5050,
     },
@@ -23,6 +23,35 @@ const settings = {
                 test: /\.txt$/,
                 use: 'raw-loader',
             },
+            {
+                test: /\.css$/,
+                use: ['sryle-loader','css-loader',]
+            },
+            {
+                test: /\.(sass | scss)$/,
+                use: ['sryle-loader','css-loader','sass-loader']
+            },
+            {
+                test: /\.(jpg|png|svg)$/,
+                use: 'file-loader'
+            },
+            {
+                test: /\.(jpg|png|svg)$/,
+                loader: 'file-loader',
+            },
+            {
+                test: /\.js$/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                      presets: ['@babel/preset-env'],
+                      plugins: [
+                        ["@babel/plugin-proposal-class-properties"]
+                      ]
+                    }
+                  },
+                exclude: /node_modules/
+            },
 
         ]
     },
@@ -30,7 +59,7 @@ const settings = {
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             title: 'Here write your title',
-            template: 'src/template.html',
+            template: 'src/templates/template.html',
         }),
     ]
 }
